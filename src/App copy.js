@@ -1,45 +1,38 @@
 import React, { Component } from 'react';
-
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       guests: [],
-      firstName: '',
-      lastName: '',
+      newfirst: '',
+      newlast: '',
       error: '',
     }
   }
-
   addUser = (event) => {
     event.preventDefault();
-    if (this.state.firstName === '' || this.state.lastName === '') {
-      this.setState({ error: 'error'})
+    if (this.state.newfirst === '' || this.state.newlast === '') {
+      this.setState({ error: 'error' })
     } else {
-      let oldTasks = this.state.guests;
-      let newTask = { first: this.state.firstName, last: this.state.lastName };
+      let oldTasks = this.state.guests
+      let newTask = { first: this.state.newfirst, last: this.state.newlast };
       this.setState({
         guests: [...oldTasks, newTask],
-        firstName: '',
-        lastName: '',
+        newfirst: '',
+        newlast: '',
       })
     }
-
   }
-
   updateFirst = (event) => {
     this.setState({
-      firstName: event.target.value
-    });
+      newfirst: event.target.value,
+    })
   }
-
   updateLast = (event) => {
     this.setState({
-      lastName: event.target.value
-    });
+      newlast: event.target.value,
+    })
   }
-
-
   render() {
     return (
       <div className="container">
@@ -48,12 +41,12 @@ class App extends Component {
             <form onSubmit={(event) => this.addUser(event)}>
               <div className="form-group">
                 <label htmlFor="first-name">Nombre</label>
-                <input type="text" className= {`${this.state.error} form-control`} name="first-name" value={this.state.firstName} onChange={this.updateFirst} />
+                <input value={this.state.newfirst} className={`${this.state.error} form-control`} type="text"  name="first-name" onChange={this.updateFirst.bind(this)} />
               </div>
 
               <div className="form-group">
                 <label htmlFor="last-name">Apellido</label>
-                <input type="text" className= {`${this.state.error} form-control`} name="last-name" value={this.state.lastName} onChange={this.updateLast} />
+                <input value={this.state.newlast} className={`${this.state.error} form-control`} type="text"  name="last-name" onChange={this.updateLast.bind(this)} />
               </div>
 
               <div className="action">
@@ -69,11 +62,12 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.guests.map((guest, index) =>
-                <tr key={index}>
-                  <td>{guest.first}</td>
-                  <td>{guest.last}</td>
-                </tr>)}
+                {this.state.guests.map((guest) =>
+                  <tr>
+                    <td>{guest.first}</td>
+                    <td>{guest.last}</td>
+                  </tr>)
+                }
               </tbody>
             </table>
           </div>
@@ -84,5 +78,3 @@ class App extends Component {
 }
 
 export default App
-
-
